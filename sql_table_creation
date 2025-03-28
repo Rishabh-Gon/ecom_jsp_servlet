@@ -1,0 +1,46 @@
+CREATE TABLE `admin` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`username`)
+);
+
+CREATE TABLE `cust` (
+  `id_cust` int NOT NULL AUTO_INCREMENT,
+  `cust_name` varchar(50) NOT NULL,
+  `cust_mail` varchar(65) NOT NULL,
+  `cust_pswd` varchar(60) NOT NULL,
+  PRIMARY KEY (`id_cust`),
+  UNIQUE KEY `cust_mail_UNIQUE` (`cust_mail`)
+);
+
+CREATE TABLE `orders` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `seller_id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`order_id`)
+);
+
+CREATE TABLE `products` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `seller_id` int NOT NULL,
+  `product_name` varchar(45) NOT NULL,
+  `product_price` decimal(10,2) NOT NULL,
+  `product_pd` varchar(1300) DEFAULT NULL,
+  `product_perm` varchar(6) NOT NULL,
+  PRIMARY KEY (`product_id`),
+  KEY `idseller_idx` (`seller_id`),
+  CONSTRAINT `idseller` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`idseller`)
+);
+
+CREATE TABLE `seller` (
+  `idseller` int NOT NULL AUTO_INCREMENT,
+  `seller_name` varchar(50) NOT NULL,
+  `seller_mail` varchar(65) NOT NULL,
+  `seller_password` varchar(60) NOT NULL,
+  `seller_perm` varchar(6) DEFAULT NULL,
+  PRIMARY KEY (`idseller`),
+  UNIQUE KEY `idseller_UNIQUE` (`idseller`),
+  UNIQUE KEY `seller_name_UNIQUE` (`seller_name`),
+  UNIQUE KEY `seller_mail_UNIQUE` (`seller_mail`)
+);
